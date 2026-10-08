@@ -28,8 +28,6 @@ class ContactoPorNombre extends Contacto
     super.correoElectronico,
   );
 
-  String getNombre() => nombre;
-
   @override
   int compareTo(ContactoPorNombre other) => nombre.compareTo(other.nombre);
 }
@@ -42,9 +40,6 @@ class ContactoPorFecha extends Contacto
     super.telefono,
     super.correoElectronico,
   );
-
-  String getNombre() => nombre;
-  DateTime getFechaNacimiento() => fechaNacimiento;
 
   @override
   int compareTo(ContactoPorFecha other) =>

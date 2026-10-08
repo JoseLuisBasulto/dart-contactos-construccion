@@ -15,13 +15,13 @@ void main() {
   });
 
   test('getters de contacto devuelven los atributos correctamente', (){
-    ContactoPorNombre contacto1 = new ContactoPorNombre(
+    ContactoPorNombre contacto1 = ContactoPorNombre(
       "Alberto", 
       DateTime(2000, 10, 26), 
       "9991266079", 
       "albertoosorno04@gmail.com");
 
-      ContactoPorFecha contacto2 = new ContactoPorFecha(
+      ContactoPorFecha contacto2 = ContactoPorFecha(
       "Alberto", 
       DateTime(2000, 10, 26), 
       "9991266079", 
@@ -34,19 +34,19 @@ void main() {
   test('listarPorCumple() muestra los contactos correctamente', (){
     final tree = BinaryTree<ContactoPorFecha>();
 
-    ContactoPorFecha contacto1 = new ContactoPorFecha(
+    ContactoPorFecha contacto1 = ContactoPorFecha(
       "Alberto", 
       DateTime(2000, 10, 26), 
       "9991266079", 
       "albertoosorno04@gmail.com");
 
-    ContactoPorFecha contacto2 = new ContactoPorFecha(
+    ContactoPorFecha contacto2 = ContactoPorFecha(
       "Basulto", 
       DateTime(2000, 07, 22), 
       "9991266079", 
       "albertoosorno04@gmail.com");
 
-    ContactoPorFecha contacto3 = new ContactoPorFecha(
+    ContactoPorFecha contacto3 = ContactoPorFecha(
       "Joel", 
       DateTime(2000, 12, 28), 
       "9991266079", 
@@ -65,7 +65,7 @@ void main() {
   test('consultarContacto() devuelve el contacto consultado correctamente', () {
     final arbolPorNombre = BinaryTree<ContactoPorNombre>();
 
-    ContactoPorNombre contacto = new ContactoPorNombre(
+    ContactoPorNombre contacto = ContactoPorNombre(
       "Alberto", 
       DateTime(2000, 10, 26), 
       "9991266079", 
@@ -83,13 +83,13 @@ void main() {
     final arbolPorNombre = BinaryTree<ContactoPorNombre>();
     final arbolPorFecha = BinaryTree<ContactoPorFecha>();
 
-    ContactoPorNombre contacto1 = new ContactoPorNombre(
+    ContactoPorNombre contacto1 = ContactoPorNombre(
       "Alberto", 
       DateTime(2000, 10, 26), 
       "9991266079", 
       "albertoosorno04@gmail.com");
 
-    ContactoPorFecha contacto2 = new ContactoPorFecha(
+    ContactoPorFecha contacto2 = ContactoPorFecha(
       "Alberto", 
       DateTime(2000, 10, 26), 
       "9991266079", 
