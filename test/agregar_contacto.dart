@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
-import '../bin/contacto.dart';
-import '../bin/menus.dart';
+import '../lib/contacto.dart';
+import '../lib/menus.dart';
 import 'package:binary_tree/binary_tree.dart';
 
 void main(){

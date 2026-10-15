@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import '../bin/contacto.dart';
+import '../lib/contacto.dart';
 
 void main(){
   test('getters de contacto devuelven los atributos correctamente', (){
