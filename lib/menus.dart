@@ -1,16 +1,17 @@
 //ignore_for_file: unused_local_variable
 import 'dart:io';
+
 import 'package:binary_tree/binary_tree.dart';
+
 import 'contacto.dart';
 import 'logica_de_archivos.dart';
 
 const int anioParaComparar = 2000;
 
-
 void menuPrincipal(
   BinaryTree<ContactoPorNombre> arbolPorNombre,
   BinaryTree<ContactoPorFecha> arbolPorFecha,
-) {  
+) {
   String? opcion;
 
   do {
@@ -29,17 +30,42 @@ void menuPrincipal(
     switch (opcion) {
       case '1':
         print("===============Agregar Contacto==============\n");
-        //agregarContacto(arbolPorNombre, arbolPorFecha);
+        registraContacto(arbolPorNombre, arbolPorFecha);
         esperarEnter();
         break;
       case '2':
         print("================Borrar Contacto===============\n");
-        //borrarContacto(arbolPorNombre, arbolPorFecha);
+        stdout.write("Ingresa el nombre del contacto a borrar: ");
+        String? nombreABorrar = stdin.readLineSync();
+        if (nombreABorrar != null) {
+          ContactoPorNombre? contactoABorrar = buscarPorNombre(
+            arbolPorNombre,
+            nombreABorrar,
+          );
+          if (contactoABorrar != null) {
+            borrarContacto(arbolPorNombre, arbolPorFecha, contactoABorrar);
+            print("Contacto borrado exitosamente.");
+          } else {
+            print("No se encontró un contacto con ese nombre.");
+          }
+        }
         esperarEnter();
         break;
       case '3':
         print("==============Consultar Contacto=============\n");
-        //consultarContacto(arbolPorNombre);
+        stdout.write("Ingresa el nombre del contacto a consultar: ");
+        String? nombreAConsultar = stdin.readLineSync();
+        if (nombreAConsultar != null) {
+          ContactoPorNombre? contactoAConsultar = buscarPorNombre(
+            arbolPorNombre,
+            nombreAConsultar,
+          );
+          if (contactoAConsultar != null) {
+            imprimirContacto(contactoAConsultar);
+          } else {
+            print("No se encontró un contacto con ese nombre.");
+          }
+        }
         esperarEnter();
         break;
       case '4':
@@ -65,23 +91,28 @@ void menuPrincipal(
 
 void agregarContacto(
   BinaryTree<ContactoPorNombre> arbolPorNombre,
-  BinaryTree<ContactoPorFecha> arbolPorFecha, 
-  ContactoPorNombre nuevoContactoNombre, 
-  ContactoPorFecha nuevoContactoFecha
-  ) {
-
+  BinaryTree<ContactoPorFecha> arbolPorFecha,
+  ContactoPorNombre nuevoContactoNombre,
+  ContactoPorFecha nuevoContactoFecha,
+) {
   arbolPorNombre.insert(nuevoContactoNombre);
   arbolPorFecha.insert(nuevoContactoFecha);
 }
 
-bool validarNombre(String nombre, BinaryTree<ContactoPorNombre> arbolPorNombre){
-  if(nombre.trim().isEmpty) return false;
+bool validarNombre(
+  String nombre,
+  BinaryTree<ContactoPorNombre> arbolPorNombre,
+) {
+  if (nombre.trim().isEmpty) return false;
 
-  ContactoPorNombre? contactoEcontrado = buscarPorNombre(arbolPorNombre, nombre);
+  ContactoPorNombre? contactoEcontrado = buscarPorNombre(
+    arbolPorNombre,
+    nombre,
+  );
 
-  if(contactoEcontrado == null){
+  if (contactoEcontrado == null) {
     return true;
-  }else{
+  } else {
     return false;
   }
 }
@@ -90,10 +121,10 @@ DateTime? validarYParsearFecha(String fecha) {
   try {
     List<String> partes = fecha.split("/");
     if (partes.length != 2) return null; // si son más de 2 campos
-    
+
     int dia = int.parse(partes[0]);
     int mes = int.parse(partes[1]);
-    
+
     return DateTime(anioParaComparar, mes, dia);
   } catch (e) {
     return null;
@@ -102,16 +133,17 @@ DateTime? validarYParsearFecha(String fecha) {
 
 void registraContacto(
   BinaryTree<ContactoPorNombre> arbolPorNombre,
-  BinaryTree<ContactoPorFecha> arbolPorFecha
-  ) {
+  BinaryTree<ContactoPorFecha> arbolPorFecha,
+) {
   print("Ingresa los datos del contacto");
 
   String nombre;
   while (true) {
     stdout.write("Nombre: ");
     String? nombreIngresado = stdin.readLineSync();
-    
-    if (nombreIngresado != null && validarNombre(nombreIngresado, arbolPorNombre)) {
+
+    if (nombreIngresado != null &&
+        validarNombre(nombreIngresado, arbolPorNombre)) {
       nombre = nombreIngresado;
       break;
     } else {
@@ -121,9 +153,9 @@ void registraContacto(
 
   DateTime? fechaNacimiento;
   while (true) {
-   stdout.write("Fecha de nacimiento (DD/MM): ");
+    stdout.write("Fecha de nacimiento (DD/MM): ");
     String? fechaStr = stdin.readLineSync();
-    
+
     if (fechaStr != null) {
       fechaNacimiento = validarYParsearFecha(fechaStr);
       if (fechaNacimiento != null) {
@@ -140,14 +172,25 @@ void registraContacto(
   String? correo = stdin.readLineSync();
 
   ContactoPorNombre nuevoContactoNombre = ContactoPorNombre(
-    nombre, fechaNacimiento, telefono!, correo!
-  );
-  
-  ContactoPorFecha nuevoContactoFecha = ContactoPorFecha(
-    nombre, fechaNacimiento, telefono, correo
+    nombre,
+    fechaNacimiento,
+    telefono!,
+    correo!,
   );
 
-  agregarContacto(arbolPorNombre, arbolPorFecha, nuevoContactoNombre, nuevoContactoFecha);
+  ContactoPorFecha nuevoContactoFecha = ContactoPorFecha(
+    nombre,
+    fechaNacimiento,
+    telefono,
+    correo,
+  );
+
+  agregarContacto(
+    arbolPorNombre,
+    arbolPorFecha,
+    nuevoContactoNombre,
+    nuevoContactoFecha,
+  );
 }
 
 void borrarContacto(
@@ -155,21 +198,30 @@ void borrarContacto(
   BinaryTree<ContactoPorFecha> arbolPorFecha,
   ContactoPorNombre contactoNombre,
 ) {
-  ContactoPorNombre? contactoNombreBorrado = buscarPorNombre(arbolPorNombre, contactoNombre.nombre);
+  ContactoPorNombre? contactoNombreBorrado = buscarPorNombre(
+    arbolPorNombre,
+    contactoNombre.nombre,
+  );
 
-  if(contactoNombreBorrado == null) return;
+  if (contactoNombreBorrado == null) return;
 
   arbolPorNombre.remove(contactoNombreBorrado);
 
-  ContactoPorFecha? contactoFechaBorrado = buscarPorFecha(arbolPorFecha, contactoNombre.nombre);
+  ContactoPorFecha? contactoFechaBorrado = buscarPorFecha(
+    arbolPorFecha,
+    contactoNombre.nombre,
+  );
 
   // difícil que sea null ya que sabemos que existe en arbolPorNombre, por lo tanto también en el arbolPorFecha
-  if(contactoFechaBorrado != null){
+  if (contactoFechaBorrado != null) {
     arbolPorFecha.remove(contactoFechaBorrado);
   }
 }
 
-ContactoPorFecha? buscarPorFecha(BinaryTree<ContactoPorFecha> arbolPorFecha, String nombre) {
+ContactoPorFecha? buscarPorFecha(
+  BinaryTree<ContactoPorFecha> arbolPorFecha,
+  String nombre,
+) {
   for (var contactoActual in arbolPorFecha) {
     if (contactoActual.nombre == nombre) {
       return contactoActual;
@@ -180,12 +232,15 @@ ContactoPorFecha? buscarPorFecha(BinaryTree<ContactoPorFecha> arbolPorFecha, Str
 
 ContactoPorNombre? consultarContacto(
   BinaryTree<ContactoPorNombre> arbolPorNombre,
-  ContactoPorNombre contactoConsultado) {
-
+  ContactoPorNombre contactoConsultado,
+) {
   return buscarPorNombre(arbolPorNombre, contactoConsultado.nombre);
 }
 
-ContactoPorNombre? buscarPorNombre(BinaryTree<ContactoPorNombre> arbolPorNombre, String nombre) {
+ContactoPorNombre? buscarPorNombre(
+  BinaryTree<ContactoPorNombre> arbolPorNombre,
+  String nombre,
+) {
   for (var contactoActual in arbolPorNombre) {
     if (contactoActual.nombre == nombre) {
       return contactoActual;
@@ -194,16 +249,14 @@ ContactoPorNombre? buscarPorNombre(BinaryTree<ContactoPorNombre> arbolPorNombre,
   return null;
 }
 
-List<ContactoPorFecha> listarPorCumple(BinaryTree<ContactoPorFecha> arbolPorFecha) {
+List<ContactoPorFecha> listarPorCumple(
+  BinaryTree<ContactoPorFecha> arbolPorFecha,
+) {
   DateTime hoy = DateTime.now();
 
-  DateTime fechaActual = DateTime(
-    anioParaComparar,
-    hoy.month,
-    hoy.day,
-  );
+  DateTime fechaActual = DateTime(anioParaComparar, hoy.month, hoy.day);
 
-  if(arbolPorFecha.isEmpty){
+  if (arbolPorFecha.isEmpty) {
     return List.empty();
   }
 
@@ -213,12 +266,15 @@ List<ContactoPorFecha> listarPorCumple(BinaryTree<ContactoPorFecha> arbolPorFech
   for (var contacto in arbolPorFecha) {
     var fechaNac = contacto.fechaNacimiento;
 
-    if(fechaNac.isBefore(fechaActual)){
+    if (fechaNac.isBefore(fechaActual)) {
       listaOrdenada.add(contacto);
       cumplesPasados++;
-    }else{
+    } else {
       int posicion = listaOrdenada.length - cumplesPasados;
-      listaOrdenada.insert(posicion, contacto); // se coloca el contacto justo antes de los cumpleaños pasados
+      listaOrdenada.insert(
+        posicion,
+        contacto,
+      ); // se coloca el contacto justo antes de los cumpleaños pasados
     }
   }
 
