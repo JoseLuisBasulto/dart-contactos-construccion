@@ -1,6 +1,9 @@
 import 'package:binary_tree/binary_tree.dart';
 import 'package:csv/csv.dart';
-import 'contacto.dart';
+
+import 'contacto_por_nombre.dart';
+import 'contacto_por_fecha.dart';
+
 import 'dart:io';
 
 /// Método 1: Crear árboles desde CSV
@@ -9,7 +12,7 @@ Future<void> crearArboles(
   BinaryTree<ContactoPorFecha> arbolPorFecha,
 ) async {
   // Leer archivo CSV como string
-  final csvString = await File('bin/contactos.csv').readAsString();
+  final csvString = await File('assets/contactos.csv').readAsString();
 
   // Decodificar CSV a lista de listas usando Csv
   final campos = Csv().decoder.convert(csvString);
@@ -61,5 +64,5 @@ void guardarArboles(BinaryTree<ContactoPorNombre> arbolPorNombre) {
   String csvData = Csv().encoder.convert(rows);
 
   // Sobrescribir archivo original
-  File('bin/contactos.csv').writeAsStringSync(csvData);
+  File('assets/contactos.csv').writeAsStringSync(csvData);
 }

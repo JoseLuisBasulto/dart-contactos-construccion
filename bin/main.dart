@@ -1,7 +1,8 @@
-import '../lib/menus.dart';
-import '../lib/contacto.dart';
+import 'package:proyecto_curi/menu.dart';
+import 'package:proyecto_curi/contacto_por_nombre.dart';
+import 'package:proyecto_curi/contacto_por_fecha.dart';
 import 'package:binary_tree/binary_tree.dart';
-import '../lib/logica_de_archivos.dart';
+import 'package:proyecto_curi/logica_de_archivos.dart';
 
 Future<void> main(List<String> arguments) async {
   final arbolPorNombre = BinaryTree<ContactoPorNombre>();
@@ -11,5 +12,6 @@ Future<void> main(List<String> arguments) async {
   await crearArboles(arbolPorNombre, arbolPorFecha);
 
   // Una vez cargados, mostrar el menú principal
-  menuPrincipal(arbolPorNombre, arbolPorFecha);
+  final menu = Menu(arbolPorNombre, arbolPorFecha);
+  menu.empezar();
 }
