@@ -1,7 +1,7 @@
-import '../lib/menus.dart';
-import '../lib/contacto.dart';
+import 'package:dart_contactos_construccion/menus.dart';
+import 'package:dart_contactos_construccion/contacto.dart';
 import 'package:binary_tree/binary_tree.dart';
-import '../lib/logica_de_archivos.dart';
+import 'package:dart_contactos_construccion/logica_de_archivos.dart';
 
 Future<void> main(List<String> arguments) async {
   final arbolPorNombre = BinaryTree<ContactoPorNombre>();
