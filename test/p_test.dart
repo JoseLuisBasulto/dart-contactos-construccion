@@ -105,7 +105,7 @@ void main() {
       agregarContacto(arbolPorNombre, arbolPorFecha, c1Nombre, c1Fecha);
       agregarContacto(arbolPorNombre, arbolPorFecha, c2Nombre, c2Fecha);
 
-      final lista = listarPorCumple(arbolPorFecha);
+      final lista = recorrerPorCumple(arbolPorFecha);
       
       expect(lista.length, equals(2));
       expect(lista[0].nombre, 'Bruno');

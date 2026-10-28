@@ -13,8 +13,8 @@ void main(){
 
       arbolPorNombre.insert(c3Nombre);
 
-      expect(validarNombre(c1Nombre.nombre, arbolPorNombre), true);
-      expect(validarNombre(' ', arbolPorNombre), false);
-      expect(validarNombre(c3Nombre.nombre, arbolPorNombre), false);
+      expect(nombreValido(c1Nombre.nombre, arbolPorNombre), true);
+      expect(nombreValido(' ', arbolPorNombre), false);
+      expect(nombreValido(c3Nombre.nombre, arbolPorNombre), false);
     });
 }

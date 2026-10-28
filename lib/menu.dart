@@ -71,7 +71,7 @@ void menuPrincipal(
       case '4':
         print("======Contactos por Fecha de Cumpleaños======\n");
         print("Contactos ordenados por fecha de cumpleaños:");
-        print(listarPorCumple(arbolPorFecha));
+        print(recorrerPorCumple(arbolPorFecha));
         esperarEnter();
         break;
       case '5':
@@ -99,7 +99,7 @@ void agregarContacto(
   arbolPorFecha.insert(nuevoContactoFecha);
 }
 
-bool validarNombre(
+bool nombreValido(
   String nombre,
   BinaryTree<ContactoPorNombre> arbolPorNombre,
 ) {
@@ -143,7 +143,7 @@ void registraContacto(
     String? nombreIngresado = stdin.readLineSync();
 
     if (nombreIngresado != null &&
-        validarNombre(nombreIngresado, arbolPorNombre)) {
+      nombreValido(nombreIngresado, arbolPorNombre)) {
       nombre = nombreIngresado;
       break;
     } else {
@@ -249,7 +249,7 @@ ContactoPorNombre? buscarPorNombre(
   return null;
 }
 
-List<ContactoPorFecha> listarPorCumple(
+List<ContactoPorFecha> recorrerPorCumple(
   BinaryTree<ContactoPorFecha> arbolPorFecha,
 ) {
   DateTime hoy = DateTime.now();
