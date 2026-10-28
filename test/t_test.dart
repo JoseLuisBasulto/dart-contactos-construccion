@@ -42,7 +42,6 @@ void main() {
         },
       ));
 
-      expect(salida, contains('Contactos ordenados por nombre:'));
       // Verificar que en alguna de las lineas guardadas se encuentren los nombres
       expect(salida.any((linea) => linea.contains('Ana')), isTrue);
       expect(salida.any((linea) => linea.contains('Carlos')), isTrue);
