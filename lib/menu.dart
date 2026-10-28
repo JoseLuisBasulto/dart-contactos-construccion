@@ -282,14 +282,13 @@ List<ContactoPorFecha> listarPorCumple(
 }
 
 void listarPorNombre(BinaryTree<ContactoPorNombre> arbolPorNombre) {
-  if (arbolPorNombre.isNotEmpty) {
-    print("Contactos ordenados por nombre:");
-    for (var contacto in arbolPorNombre) {
-      imprimirContacto(contacto);
-      print("");
-    }
-  } else {
+  if (arbolPorNombre.isEmpty) {
     print("\nNo hay contactos para mostrar.");
+    return;
+  }
+
+  for (var contacto in arbolPorNombre) {
+    imprimirContacto(contacto);
   }
 }
 
