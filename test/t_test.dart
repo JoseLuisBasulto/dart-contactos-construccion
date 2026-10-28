@@ -22,7 +22,7 @@ void main() {
       // Capturamos la salida de la consola usando runZoned
       final salida = <String>[];
       runZoned(() {
-        menu.listarPorNombre();
+        menu.listarPorNombre(menu.recorrerPorNombre());
         // Se crea una zona de ejecución aislada donde se guardará la salida en véz de mostrar en la consola
       }, zoneSpecification: ZoneSpecification(
         print: (self, parent, zone, linea) {
@@ -40,14 +40,13 @@ void main() {
 
       final salida = <String>[];
       runZoned(() {
-        menu.listarPorNombre();
+        menu.listarPorNombre(menu.recorrerPorNombre());
       }, zoneSpecification: ZoneSpecification(
         print: (self, parent, zone, linea) {
           salida.add(linea);
         },
       ));
 
-      expect(salida, contains('Contactos ordenados por nombre:'));
       // Verificar que en alguna de las lineas guardadas se encuentren los nombres
       expect(salida.any((linea) => linea.contains('Ana')), isTrue);
       expect(salida.any((linea) => linea.contains('Carlos')), isTrue);

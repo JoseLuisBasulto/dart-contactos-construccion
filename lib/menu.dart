@@ -54,7 +54,7 @@ class Menu {
           break;
         case '5':
           print("=============Contactos por Nombre============\n");
-          listarPorNombre();
+          listarPorNombre(recorrerPorNombre());
           esperarEnter();
           break;
         case '6':
@@ -258,13 +258,26 @@ class Menu {
     }
   }
 
-  void listarPorNombre() {
-    if (arbolPorNombre.isEmpty) {
+  List<ContactoPorNombre> recorrerPorNombre(){
+    if(arbolPorNombre.isEmpty){
+      return List.empty();
+    }
+
+    List<ContactoPorNombre> contactos = [];
+    for(var contacto in arbolPorNombre){
+      contactos.add(contacto);
+    }
+    
+    return contactos;
+  }
+
+  void listarPorNombre(List<ContactoPorNombre> listaDeContactos) {
+    if (listaDeContactos.isEmpty) {
       print("\nNo hay contactos para mostrar.");
       return;
     }
 
-    for (var contacto in arbolPorNombre) {
+    for (var contacto in listaDeContactos) {
       imprimirContacto(contacto);
     }
   }
