@@ -221,7 +221,6 @@ class Menu {
     List<ContactoPorFecha> listaOrdenada = arbolPorFecha.toList();
 
     listaOrdenada.sort((a, b) {
-      // Normalizamos los años al año de comparación para evaluar solo día y mes
       DateTime fechaA = DateTime(
         anioParaComparar,
         a.fechaNacimiento.month,
@@ -233,7 +232,6 @@ class Menu {
         b.fechaNacimiento.day,
       );
 
-      // Verificamos si la fecha es igual o posterior a hoy
       bool esFuturaA = !fechaA.isBefore(fechaActual);
       bool esFuturaB = !fechaB.isBefore(fechaActual);
 
