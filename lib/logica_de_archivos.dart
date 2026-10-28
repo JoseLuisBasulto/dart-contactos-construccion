@@ -18,30 +18,37 @@ Future<void> crearArboles(
   final campos = Csv().decoder.convert(csvString);
 
   // Cabecera: Nombre, FechaNacimiento, Teléfono, CorreoElectronico
-  for (var i = 1; i < campos.length; i++) {
-    var fila = campos[i];
-
-    String nombre = fila[0].toString();
-    DateTime fechaNacimiento = DateTime.parse(fila[1].toString());
-    String telefono = fila[2].toString();
-    String correoElectronico = fila[3].toString();
-
-    var contactoNombre = ContactoPorNombre(
-      nombre,
-      fechaNacimiento,
-      telefono,
-      correoElectronico,
-    );
-    var contactoFecha = ContactoPorFecha(
-      nombre,
-      fechaNacimiento,
-      telefono,
-      correoElectronico,
-    );
-
-    arbolPorNombre.insert(contactoNombre);
-    arbolPorFecha.insert(contactoFecha);
+  for (var i = 1; i < campos.length; i++){
+    procesarEInsertarContacto(campos[i], arbolPorNombre, arbolPorFecha);
   }
+}
+
+void procesarEInsertarContacto(
+  List<dynamic> fila,
+  BinaryTree<ContactoPorNombre> arbolPorNombre,
+  BinaryTree<ContactoPorFecha> arbolPorFecha,
+) {
+  String nombre = fila[0].toString();
+  DateTime fechaNacimiento = DateTime.parse(fila[1].toString());
+  String telefono = fila[2].toString();
+  String correoElectronico = fila[3].toString();
+
+  ContactoPorNombre contactoNombre = ContactoPorNombre(
+    nombre,
+    fechaNacimiento,
+    telefono,
+    correoElectronico,
+  );
+  
+  ContactoPorFecha contactoFecha = ContactoPorFecha(
+    nombre,
+    fechaNacimiento,
+    telefono,
+    correoElectronico,
+  );
+
+  arbolPorNombre.insert(contactoNombre);
+  arbolPorFecha.insert(contactoFecha);
 }
 
 void guardarArboles(BinaryTree<ContactoPorNombre> arbolPorNombre) {

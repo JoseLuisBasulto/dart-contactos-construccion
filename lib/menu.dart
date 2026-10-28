@@ -92,13 +92,8 @@ class Menu {
   bool nombreValido(String nombre) {
     if (nombre.trim().isEmpty) return false;
 
-    ContactoPorNombre? contactoEcontrado = buscarPorNombre(nombre);
-
-    if (contactoEcontrado == null) {
-      return true;
-    } else {
-      return false;
-    }
+    // Si existe entonces no es válido
+    return buscarPorNombre(nombre) == null;
   }
 
   void registraContacto() {
@@ -216,50 +211,63 @@ class Menu {
   }
 
   List<ContactoPorFecha> recorrerPorCumple() {
+    DateTime hoy = DateTime.now();
+    DateTime fechaActual = DateTime(anioParaComparar, hoy.month, hoy.day);
+
     if (arbolPorFecha.isEmpty) {
       return List.empty();
     }
 
-    DateTime hoy = DateTime.now();
-    DateTime fechaActual = DateTime(anioParaComparar, hoy.month, hoy.day);
-    List<ContactoPorFecha> listaOrdenada = [];
-    int cumplesPasados = 0; // contador para saber cuantas personas cumplen antes o en la misma fecha que la actual
+    List<ContactoPorFecha> listaOrdenada = arbolPorFecha.toList();
 
-    for (var contacto in arbolPorFecha) {
-      var fechaNac = contacto.fechaNacimiento;
+    listaOrdenada.sort((a, b) {
+      // Normalizamos los años al año de comparación para evaluar solo día y mes
+      DateTime fechaA = DateTime(
+        anioParaComparar,
+        a.fechaNacimiento.month,
+        a.fechaNacimiento.day,
+      );
+      DateTime fechaB = DateTime(
+        anioParaComparar,
+        b.fechaNacimiento.month,
+        b.fechaNacimiento.day,
+      );
 
-      if (fechaNac.isBefore(fechaActual)) {
-        listaOrdenada.add(contacto);
-        cumplesPasados++;
+      // Verificamos si la fecha es igual o posterior a hoy
+      bool esFuturaA = !fechaA.isBefore(fechaActual);
+      bool esFuturaB = !fechaB.isBefore(fechaActual);
+
+      if (esFuturaA && !esFuturaB) {
+        return -1; // A va antes que B
+      } else if (!esFuturaA && esFuturaB) {
+        return 1;  // B va antes que A
       } else {
-        int posicion = listaOrdenada.length - cumplesPasados;
-        listaOrdenada.insert(
-          posicion,
-          contacto,
-        ); // se coloca el contacto justo antes de los cumpleaños pasados
+        return fechaA.compareTo(fechaB);
       }
-    }
+    });
 
     return listaOrdenada;
   }
 
   void listarPorCumple(List<ContactoPorFecha> contactosPorCumple) {
-    if (contactosPorCumple.isNotEmpty) {
-      for (var contacto in contactosPorCumple) {
-        imprimirContacto(contacto);
-      }
-    } else {
+    if (contactosPorCumple.isEmpty) {
       print("\nNo hay contactos para mostrar.");
+      return;
+    }
+
+    for (var contacto in contactosPorCumple) {
+      imprimirContacto(contacto);
     }
   }
 
   void listarPorNombre() {
-    if (arbolPorNombre.isNotEmpty) {
-      for (var contacto in arbolPorNombre) {
-        imprimirContacto(contacto);
-      }
-    } else {
+    if (arbolPorNombre.isEmpty) {
       print("\nNo hay contactos para mostrar.");
+      return;
+    }
+
+    for (var contacto in arbolPorNombre) {
+      imprimirContacto(contacto);
     }
   }
 
