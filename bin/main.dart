@@ -1,8 +1,8 @@
-import 'package:proyecto_curi/menu.dart';
-import 'package:proyecto_curi/contacto_por_nombre.dart';
-import 'package:proyecto_curi/contacto_por_fecha.dart';
+import 'package:dart_contactos_construccion/menu.dart';
+import 'package:dart_contactos_construccion/contacto_por_nombre.dart';
+import 'package:dart_contactos_construccion/contacto_por_fecha.dart';
 import 'package:binary_tree/binary_tree.dart';
-import 'package:proyecto_curi/logica_de_archivos.dart';
+import 'package:dart_contactos_construccion/logica_de_archivos.dart';
 
 Future<void> main(List<String> arguments) async {
   final arbolPorNombre = BinaryTree<ContactoPorNombre>();
